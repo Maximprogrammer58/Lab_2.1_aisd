@@ -6,13 +6,13 @@ Set::Set(const Set& other) {
 }
 
 Set::~Set() {
-	delete_assistant(_root);
+	deleteNode(_root);
 	_size = 0;
 }
 
 Set& Set::operator=(const Set& other) {
 	if (this != &other) {
-		delete_assistant(_root);
+		deleteNode(_root);
 		_root = clone(other._root);
 		_size = other._size;
 	}
@@ -20,18 +20,18 @@ Set& Set::operator=(const Set& other) {
 }
 
 void Set::print() const {
-	print_assistant(_root);
+	printNode(_root);
 	std::cout << std::endl;
 }
 
 bool Set::contains(int value) const {
-	return contains_assistant(_root, value);
+	return containsNode(_root, value);
 }
 
 bool Set::insert(int value) {
 	if (contains(value))
 		return false;
-	_root = insert_assistant(_root, value);
+	_root = insertNode(_root, value);
 	_size++;
 	return true;
 }
@@ -39,7 +39,7 @@ bool Set::insert(int value) {
 bool Set::erase(int value) {
 	if (!contains(value))
 		return false;
-	_root = erase_assistant(_root, value);
+	_root = eraseNode(_root, value);
 	_size--;
 	return true;
 }
@@ -48,27 +48,27 @@ size_t Set::size() const {
 	return _size;
 }
 
-Node* Set::root() const {
+Set::Node* Set::root() const {
 	return _root;
 }
 
-void Set::delete_assistant(Node* node) {
+void Set::deleteNode(Node* node) {
 	if (node) {
-		delete_assistant(node->left);
-		delete_assistant(node->right);
+		deleteNode(node->left);
+		deleteNode(node->right);
 		delete node;
 	}
 }
 
-void Set::print_assistant(Node* node) const {
+void Set::printNode(Node* node) const {
 	if (node) {
-		print_assistant(node->left);
+		printNode(node->left);
 		std::cout << node->value << " ";
-		print_assistant(node->right);
+		printNode(node->right);
 	}
 }
 
-Node* Set::clone(Node* node) {
+Set::Node* Set::clone(Node* node) {
 	if (!node)
 		return nullptr;
 	Node* clone_node = new Node(node->value);
@@ -77,57 +77,57 @@ Node* Set::clone(Node* node) {
 	return clone_node;
 }
 
-bool Set::contains_assistant(Node* node, int value) const {
+bool Set::containsNode(Node* node, int value) const {
 	if (!node)
 		return false;
 	if (node->value == value)
 		return true;
 	if (node->value > value)
-		return contains_assistant(node->left, value);
-	return contains_assistant(node->right, value);
+		return containsNode(node->left, value);
+	return containsNode(node->right, value);
 }
 
-Node* Set::find(int value) const {
-	return find_node(_root, value);
+Set::Node* Set::find(int value) const {
+	return findNode(_root, value);
 }
 
-Node* Set::find_node(Node* node, int value) const {
+Set::Node* Set::findNode(Node* node, int value) const {
 	if (!node)
 		return nullptr;
 	if (node->value == value)
 		return node;
 	if (node->value > value)
-		return find_node(node->left, value);
-	return find_node(node->right, value);
+		return findNode(node->left, value);
+	return findNode(node->right, value);
 }
 
-Node* Set::insert_assistant(Node* node, int value) {
+Set::Node* Set::insertNode(Node* node, int value) {
 	if (!node)
 		return new Node(value);
 	if (value < node->value) {
-		node->left = insert_assistant(node->left, value);
+		node->left = insertNode(node->left, value);
 	}
 	else if (value > node->value) {
-		node->right = insert_assistant(node->right, value);
+		node->right = insertNode(node->right, value);
 	}
 	return node;
 }
 
-Node* Set::find_min_node(Node* node) const {
+Set::Node* Set::findMinNode(Node* node) const {
 	while (!node->left)
 		node = node->left;
 	return node;
 }
 
-Node* Set::erase_assistant(Node* node, int value) {
+Set::Node* Set::eraseNode(Node* node, int value) {
 	if (!node) {
 		return nullptr;
 	}
 	if (value < node->value) {
-		node->left = erase_assistant(node->left, value);
+		node->left = eraseNode(node->left, value);
 	}
 	else if (value > node->value) {
-		node->right = erase_assistant(node->right, value);
+		node->right = eraseNode(node->right, value);
 	}
 	else {
 		if (!node->left && !node->right) {
@@ -145,10 +145,46 @@ Node* Set::erase_assistant(Node* node, int value) {
 			return tmp;
 		}
 		else {
-			Node* tmp = find_min_node(node->right);
+			Node* tmp = findMinNode(node->right);
 			node->value = tmp->value;
-			node->right = erase_assistant(node->right, tmp->value);
+			node->right = eraseNode(node->right, tmp->value);
 		}
 	}
 	return node;
+}
+
+int Set::Iterator::operator*() {
+	return current->value;
+}
+
+Set::Iterator& Set::Iterator::operator++() {
+	if (current) {
+		if (!current->left) {
+			current = current->right;
+		}
+		else {
+			std::stack<Node*> stack;
+			stack.push(current);
+			while (true) {
+				current = stack.top();
+				stack.pop();
+				if (!current->left) {
+					stack.push(current);
+					current = current->right;
+				}
+				else {
+					break;
+				}
+			}
+		}
+	}
+	return *this;
+}
+
+bool Set::Iterator::operator==(const Set::Iterator& other) const {
+	return current == other.current;
+}
+
+bool Set::Iterator::operator!=(const Set::Iterator& other) const {
+	return !(*this == other);
 }

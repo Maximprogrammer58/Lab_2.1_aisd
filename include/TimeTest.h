@@ -8,7 +8,7 @@
 const size_t numOfAttempts = 100;
 
 template<typename T>
-double average_filling_time(T generate_func, size_t lenght) {
+double averageFillingTime(T generate_func, size_t lenght) {
     double totalTime = 0.0;
 
     for (int i = 0; i < numOfAttempts; ++i) {
@@ -24,7 +24,7 @@ double average_filling_time(T generate_func, size_t lenght) {
     return averageTime;
 } 
 
-double average_find_vector(const std::vector<size_t>& vec, size_t value) {
+double averageFindVector(const std::vector<size_t>& vec, size_t value) {
     double totalTime = 0.0;
 
     for (int i = 0; i < numOfAttempts; ++i) {
@@ -40,7 +40,7 @@ double average_find_vector(const std::vector<size_t>& vec, size_t value) {
     return averageTime;
 }
 
-double average_find_set(const Set& set, size_t value) {
+double averageFindSet(const Set& set, size_t value) {
     double totalTime = 0.0;
 
     for (int i = 0; i < numOfAttempts; ++i) {
@@ -56,7 +56,7 @@ double average_find_set(const Set& set, size_t value) {
     return averageTime;
 }
 
-double average_insert_set(Set& set, size_t value) {
+double averageInsertSet(Set& set, size_t value) {
     double totalTime = 0.0;
 
     for (int i = 0; i < numOfAttempts; ++i) {
@@ -72,7 +72,7 @@ double average_insert_set(Set& set, size_t value) {
     return averageTime;
 }
 
-double average_erase_set(Set& set, size_t value) {
+double averageEraseSet(Set& set, size_t value) {
     double totalTime = 0.0;
 
     for (int i = 0; i < numOfAttempts; ++i) {
@@ -88,7 +88,7 @@ double average_erase_set(Set& set, size_t value) {
     return averageTime;
 }
 
-double average_insert_vector(std::vector<size_t>& vec, size_t index, size_t value) {
+double averageInsertVector(std::vector<size_t>& vec, size_t index, size_t value) {
     double totalTime = 0.0;
 
     for (int i = 0; i < numOfAttempts; ++i) {
@@ -104,7 +104,7 @@ double average_insert_vector(std::vector<size_t>& vec, size_t index, size_t valu
     return averageTime;
 }
 
-double average_erase_vector(std::vector<size_t>& vec, size_t index) {
+double averageEraseVector(std::vector<size_t>& vec, size_t index) {
     double totalTime = 0.0;
 
     for (int i = 0; i < numOfAttempts; ++i) {

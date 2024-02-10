@@ -3,14 +3,10 @@
 
 #include "Set.h"
 
-Set Union(const Set& set_a, const Set& set_b);
+Set Union(Set& set_a, Set& set_b);
 
-Set symmetricDifference(const Set& set_a, const Set& set_b);
+Set symmetricDifference(Set& set_a, Set& set_b);
 
-Set Difference(const Set& set_a, const Set& set_b);
-
-void unionSet(Node* root, Set& set);
-
-void DifferenceSet(Set& set, Node* root);
+Set Difference(Set& set_a, Set& set_b);
 
 #endif

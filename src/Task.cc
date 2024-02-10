@@ -1,37 +1,23 @@
 #include "../include/Task.h"
 
-Set Union(const Set& set_a, const Set& set_b) {
+Set Union(Set& set_a, Set& set_b) {
 	Set set;
-	unionSet(set_a.root(), set);
-	unionSet(set_b.root(), set);
+	for (auto el1 : set_a) 
+		set.insert(el1);
+	for (auto el2 : set_b) 
+		set.insert(el2);
 	return set;
 }
 
-Set symmetricDifference(const Set& set_a, const Set& set_b) {
+Set symmetricDifference(Set& set_a, Set& set_b) {
 	Set difference1 = Difference(set_a, set_b);
 	Set difference2 = Difference(set_b, set_a);
 	return Union(difference1, difference2);
 }
 
-
-Set Difference(const Set& set_a, const Set& set_b) {
+Set Difference(Set& set_a, Set& set_b) {
 	Set set = set_a;
-	DifferenceSet(set, set_b.root());
+	for (auto el : set_b)
+		set.erase(el);
 	return set;
-}
-
-void unionSet(Node* root, Set& set) {
-	if (root) {
-		set.insert(root->value);
-		unionSet(root->left, set);
-		unionSet(root->right, set);
-	}
-}
-
-void DifferenceSet(Set& set, Node* root) {
-	if (root) {
-		set.erase(root->value);
-		DifferenceSet(set, root->left);
-		DifferenceSet(set, root->right);
-	}
 }

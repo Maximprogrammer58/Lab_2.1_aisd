@@ -2,7 +2,6 @@
 #include "../include/TimeTest.h"
 #include "../include/Task.h"
 
-
 int main() {
 	Set set1;
 	Set set2;
@@ -17,168 +16,30 @@ int main() {
 	set2.insert(4);
 	set2.insert(8);
 	
-	Set set = Union(set1, set2);
+	Set union_set = Union(set1, set2);
 
-	set1.print();
-	set2.print();
-	set.print();
+	Set difference_set = symmetricDifference(set1, set2);
 
-	set = symmetricDifference(set1, set2);
-	set.print();
+	for (auto el : set1)
+		std::cout << el << " ";
+	std::cout << std::endl;
 
+	for (auto el : set2)
+		std::cout << el << " ";
+	std::cout << std::endl;
+
+	union_set.print();
+	difference_set.print();
+
+	// Time test
+	Set set = generateRandomSet(1000);
+	std::vector<size_t> vec = generateRandomVector(1000);
+
+	std::cout << averageFillingTime(generateRandomSet, 1000) << std::endl;
+	std::cout << averageFillingTime(generateRandomVector, 1000) << std::endl;
+
+	std::cout << averageInsertVector(vec, 10, 105) << std::endl;
+	std::cout << averageEraseVector(vec, 10) << std::endl;
+	
 	return 0;
 }
-
-
-/*
-class Set {
-	struct Node {
-		int value;
-		Node *left, *right;
-
-		Node(int value) : value(value), left(nullptr), right(nullptr) {}
-	};
-
-	Node* _root;
-	size_t _size;
-
-public:
-	Set() : _root(nullptr), _size(0) {}
-
-	Set(const Set& other) {
-		_root = clone(other._root);
-		_size = other._size;
-	}
-
-	~Set() {
-		delete_assistant(_root);
-		_size = 0;
-	}
-
-	Set& operator=(const Set& other) {
-		if (this != &other) {
-			delete_assistant(_root);
-			_root = clone(other._root);
-			_size = other._size;
-		}
-		return *this;
-	}
-
-	void print() const {
-		print_assistant(_root);
-		std::cout << std::endl;
-	}
-
-	bool contains(int value) const {
-		return contains_assistant(_root, value);
-	}
-
-	bool insert(int value) {
-		if (contains(value))
-			return false;
-		_root = insert_assistant(_root, value);
-		_size++;
-		return true;
-	}
-
-	bool erase(int value) {
-		if (!contains(value))
-			return false;
-		_root = erase_assistant(_root, value);
-		_size--;
-		return true;
-	}
-
-	size_t size() const {
-		return _size;
-	}
-
-private:
-	void delete_assistant(Node* node) {
-		if (node) {
-			delete_assistant(node->left);
-			delete_assistant(node->right);
-			delete node;
-		}
-	}
-
-	void print_assistant(Node* node) const {
-		if (node) {
-			print_assistant(node->left);
-			std::cout << node->value << " ";
-			print_assistant(node->right);
-		}
-	}
-
-	Node* clone(Node* node) {
-		if (!node)
-			return nullptr;
-		Node* clone_node = new Node(node->value);
-		clone_node->left = clone(node->left);
-		clone_node->right = clone(node->right);
-		return clone_node;
-	}
-
-	bool contains_assistant(Node* node, int value) const {
-		if (!node)
-			return false;
-		if (node->value == value)
-			return true;
-		if (node->value > value)
-			return contains_assistant(node->left, value);
-		return contains_assistant(node->right, value);
-	}
-
-	Node* insert_assistant(Node* node, int value) {
-		if (!node)
-			return new Node(value);
-		if (value < node->value) {
-			node->left = insert_assistant(node->left, value);
-		}
-		else if (value > node->value) {
-			node->right = insert_assistant(node->right, value);
-		}
-		return node;
-	}
-
-	Node* erase_assistant(Node* node, int value) {
-		if (!node) {
-			return nullptr;
-		}
-		if (value < node->value) {
-			node->left = erase_assistant(node->left, value);
-		}
-		else if (value > node->value) {
-			node->right = erase_assistant(node->right, value);
-		}
-		else {
-			if (!node->left && !node->right) {
-				delete node;
-				return nullptr;
-			}
-			else if (!node->left) {
-				Node* tmp = node->right;
-				delete node;
-				return tmp;
-			}
-			else if (!node->right) {
-				Node* tmp = node->left;
-				delete node;
-				return tmp;
-			}
-			else {
-				Node* tmp = find_min_node(node->right);
-				node->value = tmp->value;
-				node->right = erase_assistant(node->right, tmp->value);
-			}
-		}
-		return node;
-	}
-
-	Node* find_min_node(Node* node) const {
-		while (!node->left)
-			node = node->left;
-		return node;
-	}
-};
-*/

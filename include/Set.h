@@ -2,19 +2,34 @@
 #define LAB_1_INCLUDE_SET_H
 
 #include <iostream>
-
-struct Node {
-	int value;
-	Node* left, * right;
-
-	Node(int value) : value(value), left(nullptr), right(nullptr) {}
-};
+#include <set>
+#include <stack>
 
 class Set {
+	struct Node {
+		int value;
+		Node *left, *right;
+
+		Node(int value) : value(value), left(nullptr), right(nullptr) {}
+	};
+
 	Node* _root;
 	size_t _size;
 
 public:
+	class Iterator {
+		Node* current;
+	public:
+		Iterator(Node* node) : current(node) {}
+
+		int operator*();
+
+		Iterator& operator++();
+
+		bool operator==(const Iterator& other) const;
+
+		bool operator!=(const Iterator& other) const;
+	};
 	Set() : _root(nullptr), _size(0) {}
 
 	Set(const Set& other);
@@ -29,7 +44,7 @@ public:
 
 	Node* find(int value) const;
 
-	Node* find_node(Node* node, int value) const;
+	Node* findNode(Node* node, int value) const;
 
 	bool insert(int value);
 
@@ -39,20 +54,24 @@ public:
 
 	Node* root() const;
 
-private:
-	void delete_assistant(Node* node);
+	Iterator begin() { return Iterator(_root); }
 
-	void print_assistant(Node* node) const;
+	Iterator end() { return Iterator(nullptr); }
+
+private:
+	void deleteNode(Node* node);
+
+	void printNode(Node* node) const;
 
 	Node* clone(Node* node);
 
-	bool contains_assistant(Node* node, int value) const;
+	bool containsNode(Node* node, int value) const;
 
-	Node* insert_assistant(Node* node, int value);
+	Node* insertNode(Node* node, int value);
 
-	Node* erase_assistant(Node* node, int value);
+	Node* eraseNode(Node* node, int value);
 
-	Node* find_min_node(Node* node) const;
+	Node* findMinNode(Node* node) const;
 };
 
 #endif

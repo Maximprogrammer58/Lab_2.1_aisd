@@ -6,10 +6,8 @@
 
 size_t lcg();
 
-Set generate_random_set(size_t lenght);
+Set generateRandomSet(size_t lenght);
 
-std::vector<size_t> generate_random_vector(size_t lenght);
-
-
+std::vector<size_t> generateRandomVector(size_t lenght);
 
 #endif
