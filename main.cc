@@ -1,13 +1,30 @@
 #include "../include/Random.h"
 #include "../include/TimeTest.h"
+#include "../include/Task.h"
 
 
 int main() {
+	Set set1;
+	Set set2;
 
-	Set set = generate_random_set(1000);
-	std::vector<size_t> vec = generate_random_vector(1000);
-	std::cout << average_find_set(set, 3) << std::endl;
-	std::cout << average_find_vector(vec, 3) << std::endl;
+	set1.insert(1);
+	set1.insert(2);
+	set1.insert(3);
+	set1.insert(7);
+
+	set2.insert(1);
+	set2.insert(3);
+	set2.insert(4);
+	set2.insert(8);
+	
+	Set set = Union(set1, set2);
+
+	set1.print();
+	set2.print();
+	set.print();
+
+	set = symmetricDifference(set1, set2);
+	set.print();
 
 	return 0;
 }

@@ -26,5 +26,5 @@ add_library(Set SHARED
 )
 target_include_directories(Set PUBLIC "include")
 
-add_executable(main "src/main.cc")
+add_executable(main "main.cc")
 target_link_libraries(main Set)
