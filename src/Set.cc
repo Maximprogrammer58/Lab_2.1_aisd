@@ -48,6 +48,10 @@ size_t Set::size() const {
 	return _size;
 }
 
+Node* Set::root() const {
+	return _root;
+}
+
 void Set::delete_assistant(Node* node) {
 	if (node) {
 		delete_assistant(node->left);
@@ -81,6 +85,20 @@ bool Set::contains_assistant(Node* node, int value) const {
 	if (node->value > value)
 		return contains_assistant(node->left, value);
 	return contains_assistant(node->right, value);
+}
+
+Node* Set::find(int value) const {
+	return find_node(_root, value);
+}
+
+Node* Set::find_node(Node* node, int value) const {
+	if (!node)
+		return nullptr;
+	if (node->value == value)
+		return node;
+	if (node->value > value)
+		return find_node(node->left, value);
+	return find_node(node->right, value);
 }
 
 Node* Set::insert_assistant(Node* node, int value) {

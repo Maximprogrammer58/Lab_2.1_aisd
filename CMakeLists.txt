@@ -17,6 +17,12 @@ endif()
 add_library(Set SHARED
     "include/Set.h"
     "src/Set.cc"
+    "include/Random.h"
+    "src/Random.cc"
+    "include/TimeTest.h"
+    "src/TimeTest.cc"
+    "include/Task.h"
+    "src/Task.cc"
 )
 target_include_directories(Set PUBLIC "include")
 

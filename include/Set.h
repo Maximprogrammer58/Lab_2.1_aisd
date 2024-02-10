@@ -27,11 +27,17 @@ public:
 
 	bool contains(int value) const;
 
+	Node* find(int value) const;
+
+	Node* find_node(Node* node, int value) const;
+
 	bool insert(int value);
 
 	bool erase(int value);
 
 	size_t size() const;
+
+	Node* root() const;
 
 private:
 	void delete_assistant(Node* node);

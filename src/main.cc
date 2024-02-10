@@ -1,24 +1,13 @@
-#include "../include/Set.h"
+#include "../include/Random.h"
+#include "../include/TimeTest.h"
+
 
 int main() {
-	Set set;
-	set.insert(5);
-	set.insert(3);
-	set.insert(7);
-	set.insert(2);
-	set.insert(4);
-	set.insert(6);
 
-	set.print(); 
-	std::cout << set.size() << std::endl;
-
-	std::cout << std::boolalpha;
-	std::cout << set.contains(4) << std::endl; 
-	std::cout << set.contains(8) << std::endl; 
-
-	set.erase(5);
-	set.print(); 
-	std::cout << set.size() << std::endl;
+	Set set = generate_random_set(1000);
+	std::vector<size_t> vec = generate_random_vector(1000);
+	std::cout << average_find_set(set, 3) << std::endl;
+	std::cout << average_find_vector(vec, 3) << std::endl;
 
 	return 0;
 }
