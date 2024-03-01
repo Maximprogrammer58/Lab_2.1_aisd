@@ -6,14 +6,17 @@ int main() {
 	Set set1;
 	Set set2;
 
+	set1.insert(3);
 	set1.insert(1);
 	set1.insert(2);
 	set1.insert(3);
-	set1.insert(7);
+	set1.insert(6);
+	set1.insert(5);
+	set1.insert(4);
 
 	set2.insert(1);
 	set2.insert(3);
-	set2.insert(4);
+	set2.insert(7);
 	set2.insert(8);
 	
 	Set union_set = Union(set1, set2);

@@ -153,38 +153,42 @@ Set::Node* Set::eraseNode(Node* node, int value) {
 	return node;
 }
 
-int Set::Iterator::operator*() {
-	return current->value;
+Set::Iterator::Iterator(Node* root) {
+	current = root;
+	while (current) {
+		node_stack.push(current);
+		current = current->left;
+	}
 }
 
-Set::Iterator& Set::Iterator::operator++() {
-	if (current) {
-		if (!current->left) {
-			current = current->right;
-		}
-		else {
-			std::stack<Node*> stack;
-			stack.push(current);
-			while (true) {
-				current = stack.top();
-				stack.pop();
-				if (!current->left) {
-					stack.push(current);
-					current = current->right;
-				}
-				else {
-					break;
-				}
-			}
+int Set::Iterator::operator*() {
+	return node_stack.top()->value;
+}
+
+void Set::Iterator::operator++() {
+	Node* node = node_stack.top();
+	node_stack.pop();
+	if (node->right) {
+		current = node->right;
+		while (current) {
+			node_stack.push(current);
+			current = current->left;
 		}
 	}
-	return *this;
 }
 
-bool Set::Iterator::operator==(const Set::Iterator& other) const {
-	return current == other.current;
+Set::Iterator Set::begin() {
+	return Iterator(_root); 
 }
 
-bool Set::Iterator::operator!=(const Set::Iterator& other) const {
-	return !(*this == other);
+Set::Iterator Set::end() { 
+	return Iterator(nullptr); 
+}
+
+bool Set::Iterator::operator==(const Iterator& other) {
+	return (node_stack == other.node_stack);
+}
+
+bool Set::Iterator::operator!=(const Iterator& other) {
+	return (!node_stack.empty()) || (!other.node_stack.empty());
 }

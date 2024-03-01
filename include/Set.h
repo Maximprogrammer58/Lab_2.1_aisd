@@ -8,7 +8,7 @@
 class Set {
 	struct Node {
 		int value;
-		Node *left, *right;
+		Node* left, * right;
 
 		Node(int value) : value(value), left(nullptr), right(nullptr) {}
 	};
@@ -18,18 +18,20 @@ class Set {
 
 public:
 	class Iterator {
+		std::stack<Node*> node_stack;
 		Node* current;
 	public:
-		Iterator(Node* node) : current(node) {}
+		Iterator(Node* root);
 
 		int operator*();
 
-		Iterator& operator++();
+		void operator++();
 
-		bool operator==(const Iterator& other) const;
+		bool operator==(const Iterator& other);
 
-		bool operator!=(const Iterator& other) const;
+		bool operator!=(const Iterator& other);
 	};
+
 	Set() : _root(nullptr), _size(0) {}
 
 	Set(const Set& other);
@@ -54,9 +56,9 @@ public:
 
 	Node* root() const;
 
-	Iterator begin() { return Iterator(_root); }
+	Iterator begin();
 
-	Iterator end() { return Iterator(nullptr); }
+	Iterator end();
 
 private:
 	void deleteNode(Node* node);
